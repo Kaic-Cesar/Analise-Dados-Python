@@ -8,11 +8,12 @@ local_arquivos = os.listdir("/Users/kaiccesar/Documents/Estudos/Python/Hashtag/V
 
 # Passo 2 - Importar as bases de dados de vendas
 for arquivo in local_arquivos: 
-    print(f"/Users/kaiccesar/Documents/Estudos/Python/Hashtag/Vendas/{arquivo}")
-    # O "f" informa ao Python que esse texto aceita formatações dinâmicas 
 
+    if "vendas" in arquivo.lower():
+        print(f"/Users/kaiccesar/Documents/Estudos/Python/Hashtag/Vendas/{arquivo}")
+        # O "f" informa ao Python que esse texto aceita formatações dinâmicas 
 
-# Passo 3 - Tratar / Compilar as bases de dados 
+# Passo 3 - Tratar / Compilar as bases de dados
 
 # Passo 4 - Calcular o produto mais vendido (em quantidade)
 
