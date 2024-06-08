@@ -1,4 +1,4 @@
-# Esse programa tem como objetivo realizar uma análise de faturamento de uma determinada rede de lojas. Para isso, temos uma base de dados com informações de vendas e devoluções, e para automatizar esse processo, iremos seguir o seguinte passo a passo.
+# Esse programa tem como objetivo realizar uma análise básica de faturamento de uma determinada rede de lojas. Para isso, temos uma base de dados com informações de vendas e devoluções, e para automatizar esse processo, iremos seguir o seguinte passo a passo.
 
 
 # Passo 1 - Percorrer todos os arquivos da paste base de dados (Pasta Vendas)
@@ -20,9 +20,33 @@ for arquivo in local_arquivos:
 # Passo 3 - Tratar / Compilar as bases de dados
         tabela_total = tabela_total._append(tabela) # Adiciona as tabelas para uma única tabela
 
-print(tabela_total)
+
 # Passo 4 - Calcular o produto mais vendido (em quantidade)
 
-# Passo 5 - Calcular o produto que mais faturou (em faturamento)
+tabela_produtos = tabela_total.groupby('Produto').sum()
+# Agrupa a coluna que passamos como referência e soma todas as outras colunas
+# OBS: Quando é usado o groupby, a referência que foi passada, agora se torna um índice. Na criação da dashboard, deve se atentar quando passar os eixos 
 
-# Passo 6 - Calcular a loja/cidade que mais vendeu (em faturamento) - Criar um Gráfico/Dashboard
+tabela_produtos = tabela_produtos[["Quantidade Vendida"]].sort_values(by="Quantidade Vendida", ascending=False)
+
+
+# Passo 5 - Calcular o produto que mais faturou (em faturamento)
+tabela_total['Faturamento'] = tabela_total['Quantidade Vendida'] * tabela_total['Preco Unitario']
+# Criando uma nova coluna dentro da tabela, passando duas colunas e sua operação aritmética
+
+tabela_faturamento = tabela_total.groupby('Produto').sum()
+tabela_faturamento = tabela_faturamento[["Faturamento"]].sort_values(by="Faturamento", ascending=False)
+
+
+# Passo 6 - Calcular a loja/cidade que mais vendeu (em faturamento) 
+tabela_lojas = tabela_total.groupby('Loja').sum()
+tabela_lojas = tabela_lojas[["Faturamento"]].sort_values(by="Faturamento", ascending=False)
+print(tabela_lojas)
+
+
+# Passo 7 - Criar um Gráfico/Dashboard
+
+import plotly.express as px
+
+grafico = px.bar(tabela_lojas, x=tabela_lojas.index, y='Faturamento')
+grafico.show()
