@@ -46,5 +46,10 @@ tabela_lojas = tabela_lojas[["Faturamento"]].sort_values(by="Faturamento", ascen
 
 import plotly.express as px
 
+# Gráfico de barras
+grafico = px.bar(tabela_lojas, x=tabela_lojas.index, y='Faturamento')
+grafico.show()
+
+# Gráfico de Linhas
 grafico = px.area(tabela_lojas, x=tabela_lojas.index, y='Faturamento')
 grafico.show()
