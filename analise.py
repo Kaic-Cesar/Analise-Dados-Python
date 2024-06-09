@@ -41,12 +41,10 @@ tabela_faturamento = tabela_faturamento[["Faturamento"]].sort_values(by="Faturam
 # Passo 6 - Calcular a loja/cidade que mais vendeu (em faturamento) 
 tabela_lojas = tabela_total.groupby('Loja').sum()
 tabela_lojas = tabela_lojas[["Faturamento"]].sort_values(by="Faturamento", ascending=False)
-print(tabela_lojas)
-
 
 # Passo 7 - Criar um Gráfico/Dashboard
 
 import plotly.express as px
 
-grafico = px.bar(tabela_lojas, x=tabela_lojas.index, y='Faturamento')
+grafico = px.area(tabela_lojas, x=tabela_lojas.index, y='Faturamento')
 grafico.show()
